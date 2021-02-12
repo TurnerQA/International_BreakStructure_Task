@@ -95,7 +95,7 @@
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <DoWhile DisplayName="Do While" sap:VirtualizedContainerService.HintSize="500,2056" sap2010:WorkflowViewState.IdRef="DoWhile_2" Condition="[not (Status_value.Contains(&quot;In Progress&quot;))]">
+      <DoWhile DisplayName="Do While" sap:VirtualizedContainerService.HintSize="500,2056" sap2010:WorkflowViewState.IdRef="DoWhile_2" Condition="[not (Status_value.Contains(&quot;Completed&quot;))]">
         <Sequence sap:VirtualizedContainerService.HintSize="454,1894" sap2010:WorkflowViewState.IdRef="Sequence_4">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">

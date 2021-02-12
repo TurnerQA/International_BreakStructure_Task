@@ -4,12 +4,11 @@
     <x:Property Name="Search_WO" Type="InArgument(x:String)" />
     <x:Property Name="Status_value" Type="OutArgument(x:String)" />
     <x:Property Name="Status_selector" Type="InArgument(x:String)" />
-    <x:Property Name="Report_Path" Type="InArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1240,2367</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1240,2215</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>status_check_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -78,7 +77,7 @@
       <AssemblyReference>System.ServiceModel</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="status_check" sap:VirtualizedContainerService.HintSize="584,2302" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="status_check" sap:VirtualizedContainerService.HintSize="584,2150" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="out_text1" />
       <Variable x:TypeArguments="x:Boolean" Name="Information_Popup" />
@@ -89,14 +88,14 @@
         <x:Boolean x:Key="IsPinned">False</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Sequence DisplayName="click on status" sap:VirtualizedContainerService.HintSize="542,2210" sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <Sequence DisplayName="click on status" sap:VirtualizedContainerService.HintSize="542,2058" sap2010:WorkflowViewState.IdRef="Sequence_3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <DoWhile DisplayName="Do While" sap:VirtualizedContainerService.HintSize="500,2056" sap2010:WorkflowViewState.IdRef="DoWhile_2" Condition="[not (Status_value.Contains(&quot;In Progress&quot;))]">
-        <Sequence sap:VirtualizedContainerService.HintSize="454,1894" sap2010:WorkflowViewState.IdRef="Sequence_4">
+      <DoWhile DisplayName="Do While" sap:VirtualizedContainerService.HintSize="500,1904" sap2010:WorkflowViewState.IdRef="DoWhile_2" Condition="[not (Status_value.Contains(&quot;Completed&quot;) Or Status_value.Contains(&quot;Fail&quot;))]">
+        <Sequence sap:VirtualizedContainerService.HintSize="454,1742" sap2010:WorkflowViewState.IdRef="Sequence_4">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -141,8 +140,7 @@
                 <Delay Duration="00:00:06" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Delay_2" />
                 <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Click on status" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="WaitForElement.xaml">
                   <ui:InvokeWorkflowFile.Arguments>
-                    <InArgument x:TypeArguments="x:String" x:Key="selector" xml:space="preserve">&lt;html app='chrome.exe' title='CLEAR' /&gt;
-&lt;webctrl aaname='BS' parentid='main_wfStatusBar' tag='SPAN' /&gt;</InArgument>
+                    <InArgument x:TypeArguments="x:String" x:Key="selector">[Status_selector]</InArgument>
                     <OutArgument x:TypeArguments="x:Boolean" x:Key="ELement_Result" />
                   </ui:InvokeWorkflowFile.Arguments>
                 </ui:InvokeWorkflowFile>
@@ -167,20 +165,12 @@
           <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Workflow File" sap:VirtualizedContainerService.HintSize="412,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="WaitForElementAndGetText.xaml">
             <ui:InvokeWorkflowFile.Arguments>
               <InArgument x:TypeArguments="x:String" x:Key="selector" xml:space="preserve">&lt;html app='chrome.exe' title='CLEAR' /&gt;
-&lt;webctrl parentid='drpDown_0' tag='SPAN' idx='4' /&gt;</InArgument>
+&lt;webctrl parentid='drpDown_' tag='SPAN' /&gt;
+</InArgument>
               <OutArgument x:TypeArguments="x:String" x:Key="getTextValue">[Status_value]</OutArgument>
             </ui:InvokeWorkflowFile.Arguments>
           </ui:InvokeWorkflowFile>
           <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="412,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Status value is--- &quot;+Status_value.ToString]" />
-          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Workflow File" sap:VirtualizedContainerService.HintSize="412,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="Report.xaml">
-            <ui:InvokeWorkflowFile.Arguments>
-              <InArgument x:TypeArguments="x:String" x:Key="addStatus">Pass</InArgument>
-              <InArgument x:TypeArguments="x:String" x:Key="addModules">Break Structure Task</InArgument>
-              <InArgument x:TypeArguments="x:String" x:Key="addExptedResults">["NM-BS task status is "+Status_value.ToString]</InArgument>
-              <InArgument x:TypeArguments="x:String" x:Key="Final_ReportPath">[Report_Path]</InArgument>
-              <InArgument x:TypeArguments="x:String" x:Key="SheetName">Results</InArgument>
-            </ui:InvokeWorkflowFile.Arguments>
-          </ui:InvokeWorkflowFile>
         </Sequence>
       </DoWhile>
       <Delay Duration="00:00:04" sap:VirtualizedContainerService.HintSize="500,22" sap2010:WorkflowViewState.IdRef="Delay_4" />
